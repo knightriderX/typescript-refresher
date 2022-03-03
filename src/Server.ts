@@ -1,7 +1,12 @@
-class Server {
+interface IServer {
+    startServer(): void
+    stopServer(): void
+}
 
-    private port: number;
-    private address: string;
+class Server implements IServer {
+
+    public port: number;
+    public address: string;
 
     constructor(port: number, address: string) {
         this.port = port;
@@ -11,10 +16,22 @@ class Server {
     startServer() {
         console.log(`Starting server at : ${this.address}:${this.port}`)
     }
+
+    stopServer(): void { }
+
+
 }
 
-const someServer = new Server(8080, 'localhost');
+// class DbServer extends Server {
+//     constructor(port: number, address: string) {
+//         super(port, address)
+//         console.log('calling db server constructor')
+//     }
+// }
+
+const someServer: IServer = new Server(8080, 'localhost');
 
 someServer.startServer()
 const somePort = (someServer as any).port   // someServer.port is inaccessible.
 console.log(somePort);
+
